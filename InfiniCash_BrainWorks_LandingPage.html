@@ -1,0 +1,217 @@
+<div id="resizable-embed" style="height: auto; overflow-y: auto; max-height: none;"></div>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>InfiniCash BrainWorks – What It Is & How It Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0b0f14; --card:#121822; --ink:#eaf2ff; --muted:#9fb3d1; --accent:#4fd1c5; --accent-2:#8b5cf6;
+    }
+    *{box-sizing:border-box} 
+    html, body { height: 100%; min-height: 100vh !important; }
+    body{margin:0;font-family:'Spectral', serif;font-weight:600;background:var(--bg);color:var(--ink);line-height:1.55; overflow-y: auto !important; }
+    a{color:var(--accent)}
+    .wrap{max-width:1120px;margin:0 auto;padding:28px}
+    .hero{padding:80px 0;text-align:center;background:linear-gradient(135deg, rgba(79,209,197,.2) 0%, rgba(139,92,246,.15) 100%), radial-gradient(1200px 600px at 50% -10%,rgba(79,209,197,.15),transparent); position: relative; overflow: hidden;}
+    .hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 80%, rgba(79,209,197,.05) 0%, transparent 50%); animation: shimmer 6s ease-in-out infinite;}
+    @keyframes shimmer{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+    h1{font-size:46px;line-height:1.1;margin:16px 0 8px; font-weight:600; letter-spacing:-0.02em;}
+    p.lead{font-size:18px;color:var(--muted);max-width:820px;margin:0 auto 24px; font-weight:400;}
+    .grid{display:grid;gap:24px}
+    @media (min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:1.1fr .9fr}}
+    .card{background:linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(35,48,68,.3);border-radius:20px;padding:24px; backdrop-filter: blur(10px); transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1); box-shadow: 0 8px 32px rgba(0,0,0,0.1);}
+    .card:hover{transform: translateY(-4px); box-shadow: 0 16px 48px rgba(79,209,197,0.1); border-color: var(--accent);}
+    h2{font-size:28px;margin:0 0 16px; font-weight:600;}
+    h3{font-size:20px;margin:16px 0 8px;color:#cfe0ff; font-weight:600;}
+    ul{margin:8px 0 0 24px; padding-left:0;}
+    li{margin-bottom:4px;}
+    .pill{display:inline-block;margin:4px 6px 0 0;padding:8px 12px;border-radius:999px;background:rgba(24,33,50,.5);color:var(--muted);font-size:12px;border:1px solid rgba(34,49,70,.5); transition: background 0.2s;}
+    .pill:hover{background:rgba(79,209,197,.1);}
+    .cta{margin:32px 0 16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:14px 20px;border-radius:12px;border:1px solid rgba(34,49,70,.5);background:rgba(22,32,51,.8);color:#eaf2ff;text-decoration:none; transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1); font-family:'Spectral', serif; font-weight:600; font-size:16px;}
+    .btn:hover{transform: scale(1.05); box-shadow: 0 4px 16px rgba(79,209,197,0.2);}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:0; box-shadow: 0 4px 16px rgba(79,209,197,0.3);}
+    .btn.primary:hover{box-shadow: 0 8px 24px rgba(79,209,197,0.4);}
+    .kicker{color:var(--muted);font-size:14px; font-weight:400; opacity:0.9;}
+    footer{color:#7f93b3;padding:48px 0;text-align:center; font-weight:400;}
+    .code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:rgba(15,21,32,.8);border:1px solid rgba(34,49,70,.5);border-radius:8px;padding:8px 12px;display:inline-block; font-size:14px;}
+    /* Logo animation */
+    .logo { height: 50px; animation: bounce 2s infinite; display: block; margin: 0 auto 16px; filter: drop-shadow(0 4px 12px rgba(79,209,197,0.2)); }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    /* Fade-in on scroll */
+    .card { opacity: 0; transform: translateY(20px); }
+    .card.visible { opacity: 1; transform: translateY(0); transition: all 0.6s ease-out; }
+  </style>
+  <script>
+    // Simple scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+    document.querySelectorAll('.card').forEach(el => observer.observe(el));
+
+    // Iframe height reporter (for Google Sites hack)
+    function reportHeight() {
+      const height = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+      window.parent.postMessage({ type: 'iframeHeight', height: height }, '*');
+    }
+    window.addEventListener('load', reportHeight);
+    window.addEventListener('resize', reportHeight);
+  </script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <!-- Replace with your actual logo -->
+      <img src="path/to/your-logo.png" alt="InfiniCash BrainWorks" class="logo">
+      <h1>Welcome to the Bleeding Edge!</h1>
+      <p class="lead">InfiniCash pulls in sales data, client notes, and campaign goals, and returns clean insights, smart reminders, and ready‑to‑use outreach. Less chaos. More cashflow.</p>
+      <div class="cta">
+        <a class="btn primary" href="#how-it-works">How it works</a>
+        <a class="btn" href="#faq">Quick FAQ</a>
+      </div>
+      <p class="kicker">Built on-demand around your specific needs. Get a quick, easy, FREE consultation and learn how InfiniCash BrainWorks can take over the repetitive tasks that weigh down your day, AND client-facing solutions that will allow you to scale your business without losing track of exponentially increasing demands. Your sensitive information remains yours. Portable to any Linux server or the cloud.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="what-it-is" class="grid grid-3">
+      <div class="card">
+        <h2>What it is</h2>
+        <p>AI‑powered business automation. It unifies client + sales data, predicts revenue, flags at‑risk clients, and generates outreach.</p>
+        <div><span class="pill">Automation‑first</span><span class="pill">Single source of truth</span><span class="pill">Transparent logs</span></div>
+      </div>
+      <div class="card">
+        <h2>Why it exists</h2>
+        <p>To cut busywork, surface opportunities, and keep follow‑ups on track—without me babysitting the process.</p>
+      </div>
+      <div class="card">
+        <h2>Where it runs</h2>
+        <ul>
+          <li>InfiniCash BrainWorks Hub (edge automation)</li>
+          <li>Portable to Linux servers</li>
+          <li>Cloud‑ready</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="grid grid-2" style="margin-top:32px">
+      <div class="card">
+        <h2>Data spine</h2>
+        <h3>Client Codex</h3><p>Master list of businesses, contacts, status, and <span class="code">Paid per Month</span>.</p>
+        <h3>Daily Sales Sheets</h3><p>Every interaction logged. The system labels clients based on recency.</p>
+        <h3>Integrated Report</h3><p>Unified view of engagement, revenue, and status.</p>
+      </div>
+      <div class="card">
+        <h2>Status rules</h2>
+        <ul>
+          <li><strong>Active:</strong> ≤ 25 days since last contact</li>
+          <li><strong>Needs Follow‑Up:</strong> 26–44 days</li>
+          <li><strong>Stale:</strong> ≥ 45 days</li>
+        </ul>
+        <p class="kicker">These feed the Smart Planner to build efficient daily routes.</p>
+      </div>
+    </section>
+
+    <section class="grid grid-3" style="margin-top:24px">
+      <div class="card">
+        <h2>Automation backbone</h2>
+        <ul>
+          <li>Syncs to Drive every 15 minutes</li>
+          <li>Ingest → clean → merge</li>
+          <li>Label statuses → update Planner</li>
+          <li>Daily summary generator</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>AI power</h2>
+        <ul>
+          <li>Revenue forecasting</li>
+          <li>Churn detection</li>
+          <li>Segmentation</li>
+          <li>Summarization & sentiment</li>
+          <li>Ad optimization</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Content generation</h2>
+        <ul>
+          <li>Sales emails & SMS</li>
+          <li>Call scripts</li>
+          <li>Radio ad copy</li>
+          <li>Clean summaries of notes</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid grid-2" style="margin-top:24px">
+      <div class="card">
+        <h2>Interface</h2>
+        <ul>
+          <li>Op: Gradio app with chatbot + file upload</li>
+          <li>Next: Sleek sales dashboard + sponsor/ad tools</li>
+          <li>Future: Optional client portal</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Logs & backups</h2>
+        <ul>
+          <li>Everything logged (pipeline + emails)</li>
+          <li>Daily backups with timestamps</li>
+          <li>Auto‑log failures with retry</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="card" style="margin-top:24px">
+      <h2>Quick FAQ</h2>
+      <h3>What does it actually do?</h3>
+      <p>It ties together sales + client data, predicts revenue, flags follow‑ups, and drafts outreach so YOU can move faster.</p>
+      <h3>How does it choose who to visit?</h3>
+      <p>By last contact date, revenue, and region. It labels clients (Active / Needs Follow‑Up / Stale) and feeds the Smart Planner.</p>
+    </section>
+
+    <section class="card" style="margin-top:24px">
+      <h2>Want a tour or demo?</h2>
+      <p>Happy to walk you through the dashboard, data spine, and how the AI actually helps day‑to‑day. It’s simple, fast, and practical.</p>
+
+      <iframe src="https://www.infinicashbrainworks.com/get-started" width="100%" height="600" frameborder="0" scrolling="auto" style="border:0; border-radius:12px; margin:16px 0;"></iframe>
+
+      <div class="cta">
+        <a class="btn primary" href="mailto:jakehebert@gmail.com">Book a demo</a>
+        <a class="btn" href="#">Download one‑pager</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <script>document.write(new Date().getFullYear())</script> InfiniCash BrainWorks
+  </footer>
+</body>
+</html>
+
+
+</div>
+<script>
+// Auto-resize on load
+window.addEventListener('load', () => {
+  const embed = document.getElementById('resizable-embed');
+  if (embed) {
+    embed.style.height = Math.max(document.body.scrollHeight, 2500) + 'px';
+  }
+});
+</script>
